@@ -11,6 +11,16 @@ const params = {
   toStation: 'Tilburg'
 };
 
+// console.log is limited to 3 levels
+function myCallback (err, data) {
+  console.dir (err || data, {
+    depth: null,
+    colors: true
+  });
+}
+ 
+
+
 board.on("ready", function() {
 	var i = 0;
   var led = new five.Led(13);
@@ -21,6 +31,8 @@ board.on("ready", function() {
 
 	buttons.on('down', function(button) {
 		console.log('Pressed: ', button.pin);
+		// Get travel advise
+		ns.reisadvies (params, myCallback);
 		i++;
 		console.log(i);
 		if (i % 2 == 0) {
