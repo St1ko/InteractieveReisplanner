@@ -12,5 +12,8 @@
     "url": "https://git.fhict.nl/I403606/mediaInstallatie2.0.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "johnny-five": "^0.15.0"
+  }
 }

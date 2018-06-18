@@ -1,6 +1,15 @@
 var five = require("johnny-five");
 var board = new five.Board();
 
+const ns = require ('ns-api') ({
+  username: 'w.vangogh@student.fontys.nl',
+  password: 'tsONFg3KBtMdzgzXMtwhyvw1wg1vAkoZQitwiMfCcinX_GPDE5439Q'
+});
+
+const params = {
+  fromStation: 'Eindhoven',
+  toStation: 'Tilburg'
+};
 
 board.on("ready", function() {
 	var i = 0;
