@@ -18,12 +18,16 @@ function myCallback (err, data) {
 
 	//return individual items from data array
 	for (var i = 0; i < data.length; i++) {
-		console.log('Vertrek: ', data[i].ActueleVertrekTijd);
-		console.log('Aankomst: ', data[i].ActueleAankomstTijd);
+		console.log('Vertrek: ', retrieveTime(data[i].ActueleVertrekTijd));
+		console.log('Aankomst: ', retrieveTime(data[i].ActueleAankomstTijd));
 		console.log('Reistijd: ', data[i].ActueleReisTijd);
 		console.log('Spoor Vertrek: ', data[i].ReisDeel[0].ReisStop[0].Spoor);
 		console.log('Spoor Aankomst: ', data[i].ReisDeel[0].ReisStop.pop().Spoor);
 		console.log();
+	}
+
+	function retrieveTime(input){
+		return input.substr(11, 5);
 	}
 
 	// returns the whole data array
