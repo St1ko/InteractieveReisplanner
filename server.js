@@ -8,7 +8,9 @@ const ns = require ('ns-api') ({
 
 const params = {
   fromStation: 'Eindhoven',
-  toStation: 'Tilburg'
+  toStation: 'Tilburg',
+	previousAdvices: 0,
+	nextAdvices: 2
 };
 
 // console.log is limited to 3 levels
@@ -18,8 +20,6 @@ function myCallback (err, data) {
     colors: true
   });
 }
- 
-
 
 board.on("ready", function() {
 	var i = 0;
