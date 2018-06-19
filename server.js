@@ -15,10 +15,14 @@ const params = {
 
 function myCallback (err, data) {
 	console.log('Aantal trajecten: ', data.length);
+	console.log('Reisadviezen voor: ', params.fromStation, '-->', params.toStation);
 	console.log();
 	//return individual items from data array
 	for (var i = 0; i < data.length; i++) {
-		console.log('Reisadviezen voor: ', params.fromStation, '-->', params.toStation);
+		var d = new Date(data[i].ActueleAankomstTijd);
+		console.log("DDDD", d);
+		console.log(d.getHours() + ":" + d.getMinutes());
+		console.log(data[i].ActueleAankomstTijd);
 		console.log('Vertrek: ', retrieveTime(data[i].ActueleVertrekTijd));
 		console.log('Aankomst: ', retrieveTime(data[i].ActueleAankomstTijd));
 		console.log('Reistijd: ', data[i].ActueleReisTijd);
