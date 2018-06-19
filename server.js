@@ -8,16 +8,17 @@ const ns = require ('ns-api') ({
 
 const params = {
   fromStation: 'Eindhoven',
-  toStation: 'Boxtel',
+  toStation: '',
 	previousAdvices: 0,
 	nextAdvices: 2
 };
 
 function myCallback (err, data) {
 	console.log('Aantal trajecten: ', data.length);
-
+	console.log();
 	//return individual items from data array
 	for (var i = 0; i < data.length; i++) {
+		console.log('Reisadviezen voor: ', params.fromStation, '-->', params.toStation);
 		console.log('Vertrek: ', retrieveTime(data[i].ActueleVertrekTijd));
 		console.log('Aankomst: ', retrieveTime(data[i].ActueleAankomstTijd));
 		console.log('Reistijd: ', data[i].ActueleReisTijd);
@@ -39,11 +40,25 @@ function myCallback (err, data) {
 
 board.on("ready", function() {
 	var buttons = new five.Buttons({
-		pins: [2],
+		pins: [2,4,6,8],
 	});
 
 	buttons.on('down', function(button) {
-		console.log('Pressed: ', button.pin);
+		console.log('Pressed button: ', button.pin);
+		switch (button.pin) {
+			case 2:
+				params.toStation = 'Tilburg';
+				break;
+			case 4:
+				params.toStation = 'Breda';
+				break;
+			case 6:
+				params.toStation = 'Rotterdam';
+				break;
+			case 8:
+				params.toStation = 'Den Bosch';
+				break;
+		}
 		// Get travel advise
 		ns.reisadvies (params, myCallback);
 	});
