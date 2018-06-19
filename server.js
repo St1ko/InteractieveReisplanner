@@ -18,6 +18,10 @@ function myCallback (err, data) {
 
 	//return individual items from data array
 	for (var i = 0; i < data.length; i++) {
+		var d = new Date(data[i].ActueleAankomstTijd);
+		console.log("DDDD", d);
+		console.log(d.getHours() + ":" + d.getMinutes());
+		console.log(data[i].ActueleAankomstTijd);
 		console.log('Vertrek: ', retrieveTime(data[i].ActueleVertrekTijd));
 		console.log('Aankomst: ', retrieveTime(data[i].ActueleAankomstTijd));
 		console.log('Reistijd: ', data[i].ActueleReisTijd);
