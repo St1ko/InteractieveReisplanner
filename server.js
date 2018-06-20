@@ -16,28 +16,36 @@ const params = {
 
 function myCallback (err, data) {
 	console.log('Aantal trajecten: ', data.length);
-	console.log('Reisadviezen voor: ', params.fromStation, '-->', params.toStation);
 	console.log();
 	//return individual items from data array
 	for (var i = 0; i < data.length; i++) {
-		console.log('Vertrek: ', moment(data[i].ActueleVertrekTijd).format("HH:mm"));
-		console.log('Aankomst: ', moment(data[i].ActueleAankomstTijd).format("HH:mm"));
-		console.log('Reistijd: ', data[i].ActueleReisTijd);
-		console.log('Spoor Vertrek: ', data[i].ReisDeel[0].ReisStop[0].Spoor);
-		console.log('Spoor Aankomst: ', data[i].ReisDeel[0].ReisStop.pop().Spoor);
-		console.log();
+		// console.log('Vertrek: ', moment(data[i].ActueleVertrekTijd).format("HH:mm"));
+		// console.log('Aankomst: ', moment(data[i].ActueleAankomstTijd).format("HH:mm"));
+		// console.log('Reistijd: ', data[i].ActueleReisTijd);
+		// console.log('Spoor Vertrek: ', data[i].ReisDeel[0].ReisStop[0].Spoor);
+		// console.log('Spoor Aankomst: ', data[i].ReisDeel[0].ReisStop.pop().Spoor);
+		// console.log();
+		console.log('Aantal overstappen: ', data[i].AantalOverstappen);
 
-		if(data[i].AantalOverstappen > 0) {
-			console.log("MET OVERSTAPPEN");
-			var aantalOverstappen = data[i].AantalOverstappen;
-			console.log(aantalOverstappen, "overstappen");
-
-		} else {
-			console.log("ZONDER OVERSTAPPEN");
+		for (var j=0; j < data[i].ReisDeel.length; j++) {
+			printReisdeel(data[i].ReisDeel[j]);
 		}
-		console.log();
-
 	}
+
+	// console.dir (err || data, {
+	// 	depth: null,
+	// 	colors: true
+	// });
+}
+
+function printReisdeel(reisdeel) {
+	console.log(reisdeel.ReisStop[0].Naam, moment(reisdeel.ReisStop[0].Tijd).format("HH:mm"), reisdeel.ReisStop[0].Spoor);
+	console.log('|');
+	console.log('|');
+
+	var endStation = reisdeel.ReisStop.pop();
+	console.log(endStation.Naam, moment(endStation.Tijd).format("HH:mm"), endStation.Spoor);
+	console.log();
 }
 
 board.on("ready", function() {
@@ -57,13 +65,6 @@ board.on("ready", function() {
 				break;
 			case 6:
 				params.toStation = 'Rotterdam';
-				// console.log is limited to 3 levels
-				function myCallback (err, data) {
-				  console.dir (err || data, {
-				    depth: null,
-				    colors: true
-				  });
-				}
 				break;
 			case 8:
 				params.toStation = 'Den Bosch';
