@@ -26,7 +26,17 @@ function myCallback (err, data) {
 		console.log('Spoor Vertrek: ', data[i].ReisDeel[0].ReisStop[0].Spoor);
 		console.log('Spoor Aankomst: ', data[i].ReisDeel[0].ReisStop.pop().Spoor);
 		console.log();
-		
+
+		if(data[i].AantalOverstappen > 0) {
+			console.log("MET OVERSTAPPEN");
+			var aantalOverstappen = data[i].AantalOverstappen;
+			console.log(aantalOverstappen, "overstappen");
+
+		} else {
+			console.log("ZONDER OVERSTAPPEN");
+		}
+		console.log();
+
 	}
 }
 
@@ -40,12 +50,20 @@ board.on("ready", function() {
 		switch (button.pin) {
 			case 2:
 				params.toStation = 'Tilburg';
+
 				break;
 			case 4:
 				params.toStation = 'Breda';
 				break;
 			case 6:
 				params.toStation = 'Rotterdam';
+				// console.log is limited to 3 levels
+				function myCallback (err, data) {
+				  console.dir (err || data, {
+				    depth: null,
+				    colors: true
+				  });
+				}
 				break;
 			case 8:
 				params.toStation = 'Den Bosch';
