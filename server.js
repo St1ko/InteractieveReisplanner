@@ -15,21 +15,27 @@ const params = {
 };
 
 function myCallback (err, data) {
-	console.log('Aantal trajecten: ', data.length);
+	var trajecten = 3;
+	// console.log(data);
+	console.log('Aantal trajecten: ', trajecten);
 	console.log();
 	//return individual items from data array
-	for (var i = 0; i < data.length; i++) {
+	for (var i = 0; i < trajecten; i++) {
 		// console.log('Vertrek: ', moment(data[i].ActueleVertrekTijd).format("HH:mm"));
 		// console.log('Aankomst: ', moment(data[i].ActueleAankomstTijd).format("HH:mm"));
 		// console.log('Reistijd: ', data[i].ActueleReisTijd);
 		// console.log('Spoor Vertrek: ', data[i].ReisDeel[0].ReisStop[0].Spoor);
 		// console.log('Spoor Aankomst: ', data[i].ReisDeel[0].ReisStop.pop().Spoor);
-		// console.log();
+
+		console.log("TRAJECT:", i+1);
+		console.log("----------")
 		console.log('Aantal overstappen: ', data[i].AantalOverstappen);
 
 		for (var j=0; j < data[i].ReisDeel.length; j++) {
 			printReisdeel(data[i].ReisDeel[j]);
 		}
+		console.log("----------")
+		console.log("");
 	}
 
 	// console.dir (err || data, {
@@ -39,13 +45,28 @@ function myCallback (err, data) {
 }
 
 function printReisdeel(reisdeel) {
-	console.log(reisdeel.ReisStop[0].Naam, moment(reisdeel.ReisStop[0].Tijd).format("HH:mm"), reisdeel.ReisStop[0].Spoor);
-	console.log('|');
-	console.log('|');
-
 	var endStation = reisdeel.ReisStop.pop();
-	console.log(endStation.Naam, moment(endStation.Tijd).format("HH:mm"), endStation.Spoor);
+
+	var departTime = moment(reisdeel.ReisStop[0].Tijd);
+	var arrivalTime = moment(endStation.Tijd);
+	var travelDuration = arrivalTime.diff(departTime, 'minutes');
+
+	console.log(departTime.format("HH:mm"),'O',reisdeel.ReisStop[0].Naam);
+	console.log("","","","","","",'|',"Spoor:",reisdeel.ReisStop[0].Spoor);
+	console.log("","","","","","",'|');
+	console.log(convertMinsToHrsMins(travelDuration),'|');
+	console.log("","","","","","",'|');
+	console.log("","","","","","", '|',"Spoor:",endStation.Spoor);
+	console.log(arrivalTime.format("HH:mm"),'O',endStation.Naam);
 	console.log();
+}
+
+function convertMinsToHrsMins(mins) {
+  let h = Math.floor(mins / 60);
+  let m = mins % 60;
+  h = h < 10 ? '0' + h : h;
+  m = m < 10 ? '0' + m : m;
+  return `${h}:${m}`;
 }
 
 board.on("ready", function() {
@@ -71,6 +92,8 @@ board.on("ready", function() {
 				break;
 		}
 		// Get travel advice
+		//console.log('\033[2J');
+		console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		ns.reisadvies (params, myCallback);
 	});
 });
