@@ -26,6 +26,7 @@ function myCallback (err, data) {
 		console.log('Spoor Vertrek: ', data[i].ReisDeel[0].ReisStop[0].Spoor);
 		console.log('Spoor Aankomst: ', data[i].ReisDeel[0].ReisStop.pop().Spoor);
 		console.log();
+		
 	}
 }
 
